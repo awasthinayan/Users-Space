@@ -52,3 +52,13 @@ export const updatePost = async (id,updateFields) => {
         console.log(error)
     }
 }
+
+export const findPostById = async (id) => {
+    try{
+        const foundPost = await Post.findById(id);
+        return foundPost;
+    }
+    catch(error){
+        console.log(error)
+    }
+}

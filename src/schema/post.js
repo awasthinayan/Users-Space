@@ -14,19 +14,33 @@ const postSchema = new mongoose.Schema(
       required: [true, "Post content is required"],
       minlength: [10, "Content should be at least 10 characters long"],
     },
-    
-    user:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"user",
-      required:true
+
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
     },
 
-    image:{
-      type:String,
-      require:true
-    }
-}, { timestamps:true} )
+    image: {
+      type: String,
+      require: true,
+    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "like",
+      },
+    ],
+    comment: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "comment",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-const Post = mongoose.model("post", postSchema)
+const Post = mongoose.model("post", postSchema);
 
 export default Post;

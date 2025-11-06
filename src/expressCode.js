@@ -10,6 +10,7 @@ import authMiddleware, { isAdmin } from './middlewares/authMiddleware.js';
 // import swaggerUi from 'swagger-ui-express';
 // import swaggerJSDoc from 'swagger-jsdoc';
 // import { options } from './utils/swaggerOptions.js';
+import {rateLimit} from 'express-rate-limit';
 
 const PORT = 3000;
 
@@ -22,6 +23,13 @@ const server = express();
 server.use(express.json());
 server.use(express.urlencoded({extended:true}));
 
+const limiter = (rateLimit({
+    windowMs: .3 * 60 * 100, // 5 requests in 30 seconds
+    max: 5, // limit each IP to 100 requests per windowMs
+    message: "Too many requests from your IP, please try again after an hour",
+}));
+
+server.use(limiter)
 
 server.get('/', (req,res) => {
     res.send("hello world Home")
